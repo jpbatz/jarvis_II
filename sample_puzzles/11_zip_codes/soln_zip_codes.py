@@ -47,30 +47,29 @@
 # Put your code here:
 
 import re
-patt = re.compile(r'(\b\w{2} ((\d{5})-(\d{4})\b|(\d{5})))[\n ]')
+patt = re.compile(r'(\b\w{2} ((\d{5})-(\d{4})([ ]|\n+)|(\d{5})([ ]|\n+)))')
 
 with open('output.txt') as fin:
     matches = []
     for line in fin:
-        line = line.rstrip()
         mo = patt.search(line)
         if mo:
+            print(mo.group())
             matches.append(mo)
 
 total = 0
 for match in matches:
     # 2 * 3 > niner
-
+    print(match.groups())
     if match.group(3):
         value = int(match.group(3)) + int(match.group(4))
 
     # 4 > fiver
-    elif match.group(5):
-        value = int(match.group(5))
+    elif match.group(6):
+        value = int(match.group(6))
 
     total += value
-    print(total, value)
 
 print('ANSWER: ', total)
 
-# ANSWER: 700540
+# ANSWER: 914778 
